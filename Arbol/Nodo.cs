@@ -18,18 +18,9 @@ namespace Arbol
             derecha = null;
             izquierda = null;
         }
+        
+       // public Nodo<T> raiz; 
 
         ~Nodo() { }
-
-        // crea el primer nodo, nodo raiz
-        public Nodo<T> CrearNodo(T valor)
-        {
-            Nodo<T> nuevoNodo = new Nodo<T>();
-            nuevoNodo.valor = valor;
-            nuevoNodo.izquierda = null;
-            nuevoNodo.derecha = null;
-
-            return nuevoNodo;
-        }
     }
 }

@@ -6,18 +6,33 @@ namespace Arbol
 {
     public class Arbol<T>:Nodo<T>
     {
-       // Farmaco farmaco = new Farmaco();
+        Nodo<T> raiz;
 
-        private Nodo<T> arbol = new Nodo<T>();
-        int contador;
-
+        //constructor 
         public Arbol()
         {
-            arbol = null;
-            contador = 0;
+            raiz = null; 
         }
 
         ~Arbol() { }
+
+        // Insertar nodos en el árbol 
+        public void Insertar(T valor)
+        {
+            Nodo<T> NuevoNodo = new Nodo<T>();
+            NuevoNodo.valor = valor;
+            NuevoNodo.izquierda = null;
+            NuevoNodo.derecha = null;
+
+            if (raiz == null)
+            {
+                raiz = NuevoNodo;
+            }
+            else
+            {
+                raiz = InsertarNodo(raiz, NuevoNodo);
+            }
+        }
 
         public T Mayor<T>(T valor1, T valor2) where T : IComparable
         {
@@ -25,35 +40,44 @@ namespace Arbol
             return valor2;
         }
 
-        // Insertar nodos en el árbol 
-        public void Insertar(Nodo<T> arbol, T valor)
+        private Nodo<T> InsertarNodo(Nodo<T> actual, Nodo<T> nuevo)
         {
-            if (arbol == null)
+            string valor1 = nuevo.valor.ToString();
+            string valor2 = actual.valor.ToString();
+
+            string mayor = Mayor<string>(valor1, valor2); // nuevo.valor compareTo(actual) > 0
+
+            // solo se compara mayor y menor porque no hay valores repetidos dentro del árbol binario
+            if (mayor == valor1)
             {
-                Nodo<T> nuevoNodo = CrearNodo(valor);
-                arbol = nuevoNodo;
-            }
-            else
-            {
-                T valorRaiz = arbol.valor;
-
-                // se asigna como mayor al valorRaiz
-                string mayor = valorRaiz.ToString();
-                string menor = valor.ToString();
-
-                string comparacion = Mayor<string>(mayor, menor);
-
-                // solo se compara mayor y menor porque no hay valores repetidos dentro del árbol binario
-                if (comparacion == mayor)
+                if(actual.derecha == null)
                 {
-                    Insertar(arbol.derecha, valor);
+                    actual.derecha = nuevo;
+                    return actual; 
                 }
                 else
                 {
-                    Insertar(arbol.izquierda, valor);
+                    actual.derecha = InsertarNodo(actual.derecha, nuevo);
+                    return actual;
                 }
             }
+            else if (mayor != valor1)
+            {
+                if(actual.izquierda == null)
+                {
+                    actual.izquierda = nuevo;
+                    return actual;
+                }
+                else
+                {
+                    actual.izquierda = InsertarNodo(actual.izquierda, nuevo);
+                    return actual;
+                }
+            }
+            else
+            {
+                return null;
+            }
         }
-
     }
 }
