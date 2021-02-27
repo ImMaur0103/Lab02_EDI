@@ -17,7 +17,7 @@ namespace Arbol
         ~Arbol() { }
 
         // Insertar nodos en el árbol 
-        public void Insertar(T valor)
+        public void Insertar(Farmaco valor)
         {
             Nodo<T> NuevoNodo = new Nodo<T>();
             NuevoNodo.valor = valor;
@@ -42,18 +42,12 @@ namespace Arbol
 
         private Nodo<T> InsertarNodo(Nodo<T> actual, Nodo<T> nuevo)
         {
-            string valor1 = nuevo.valor.ToString();
-            string valor2 = actual.valor.ToString();
-
-            string mayor = Mayor<string>(valor1, valor2); // nuevo.valor compareTo(actual) > 0
-
-            // solo se compara mayor y menor porque no hay valores repetidos dentro del árbol binario
-            if (mayor == valor1)
+            if (nuevo.valor.Nombre.CompareTo(actual.valor.Nombre) > 0)
             {
                 if(actual.derecha == null)
                 {
                     actual.derecha = nuevo;
-                    return actual; 
+                    return actual;
                 }
                 else
                 {
@@ -61,9 +55,9 @@ namespace Arbol
                     return actual;
                 }
             }
-            else if (mayor != valor1)
+            else if(nuevo.valor.Nombre.CompareTo(actual.valor.Nombre) < 0)
             {
-                if(actual.izquierda == null)
+                if (actual.izquierda == null)
                 {
                     actual.izquierda = nuevo;
                     return actual;
@@ -84,13 +78,25 @@ namespace Arbol
         {
             Nodo<T> recorrer = raiz;
             bool encontrar = false;
-            while(recorrer != null || encontrar == true)
+            while(recorrer != null || encontrar == false)
             {
-                if(nombre == recorrer.valor.ToString())
+                if(nombre == recorrer.valor.Nombre)
                 {
-                    return 
+                    encontrar = true; 
+                }
+                else
+                {
+                    if(nombre.CompareTo(recorrer.valor.Nombre) > 0)
+                    {
+                        recorrer = recorrer.derecha;
+                    }
+                    else
+                    {
+                        recorrer = recorrer.izquierda;
+                    }
                 }
             }
+            return recorrer.valor.Numero_Linea;
         }
     }
 }
