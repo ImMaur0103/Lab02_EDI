@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ListaDobleEnlace
 {
-    class ListaDoble<T>:Nodo<T>
+    public class ListaDoble<T>:Nodo<T>
     {
         private Nodo<T> inicio = new Nodo<T>();
         private Nodo<T> fin = new Nodo<T>();

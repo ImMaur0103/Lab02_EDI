@@ -21,6 +21,7 @@ namespace Arbol
 
         ~Nodo() { }
 
+        // crea el primer nodo, nodo raiz
         public Nodo<T> CrearNodo(T valor)
         {
             Nodo<T> nuevoNodo = new Nodo<T>();

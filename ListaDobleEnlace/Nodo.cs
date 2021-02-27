@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ListaDobleEnlace
 {
-    class Nodo<T> 
+    public class Nodo<T> 
     {
         private T valor { get; set; }
 
