@@ -79,5 +79,18 @@ namespace Arbol
                 return null;
             }
         }
+
+        public int Buscar(string nombre)
+        {
+            Nodo<T> recorrer = raiz;
+            bool encontrar = false;
+            while(recorrer != null || encontrar == true)
+            {
+                if(nombre == recorrer.valor.ToString())
+                {
+                    return 
+                }
+            }
+        }
     }
 }
