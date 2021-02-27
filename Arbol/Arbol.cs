@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using ListaDobleEnlace;
 
 namespace Arbol
 {
     public class Arbol<T>:Nodo<T>
     {
-        Nodo<T> raiz;
+        public Nodo<T> raiz;
 
         //constructor 
         public Arbol()
@@ -97,6 +98,16 @@ namespace Arbol
                 }
             }
             return recorrer.valor.Numero_Linea;
+        }
+
+        public void Preorden(Nodo<Farmaco> raiz, ListaDoble<Farmaco> ListaInventario)
+        {
+            if (raiz!= null)
+            {
+                ListaInventario.InsertarInicio(raiz.valor);
+                Preorden(raiz.izquierda, ListaInventario);
+                Preorden(raiz.derecha, ListaInventario);
+            }
         }
     }
 }
