@@ -6,6 +6,13 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Lab02.Models;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Hosting;
+using Lab02.Extra;
+using System.IO;
+using ListaDobleEnlace;
+using CsvHelper;
+using System.Globalization;
 
 namespace Lab02.Controllers
 {
@@ -32,6 +39,60 @@ namespace Lab02.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        // Método para leer archivo CSV
+
+        [HttpGet]
+        public IActionResult Index(ListaDoble<InfoFarmaco> ListaFarmacos = null)
+        {
+            if(ListaFarmacos.inicio != null)
+            {
+                Singleton.Instance.ListaFarmacos = ListaFarmacos;
+            }
+            return View(Singleton.Instance.ListaFarmacos);
+        }
+
+        [HttpPost]
+        public IActionResult Index(IFormFile file, [FromServices] IHostingEnvironment hostingenvironment)
+        {
+            string fileName = $"{hostingenvironment.WebRootPath}\\files\\{file.FileName}";
+            using (FileStream fileStream = System.IO.File.Create(fileName))
+            {
+                file.CopyTo(fileStream);
+                fileStream.Flush();
+            }
+
+            var Farmacos = this.GetFarmacosList(file.FileName);
+            return Index(Farmacos);
+        }
+
+        private ListaDoble<InfoFarmaco> GetFarmacosList(string filename)
+        {
+            ListaDoble<InfoFarmaco> farmacos = new ListaDoble<InfoFarmaco>();
+
+            var path = $"{Directory.GetCurrentDirectory()}{@"\wwwroot\files"}" + "\\" + filename;
+            using (var reader = new StreamReader(path))
+            using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+            {
+                csv.Read();
+                csv.ReadHeader();
+                while (csv.Read())
+                {
+                    var farmaco = csv.GetRecord<InfoFarmaco>();
+                    farmacos.InsertarInicio(farmaco);
+                }
+            }
+
+            path = $"{Directory.GetCurrentDirectory()}{@"\wwwroot\FlesTo"}";
+            using (var write = new StreamWriter(path + "\\Archivo.csv"))
+            using (var csv = new CsvWriter(write, CultureInfo.InvariantCulture))
+            {
+                csv.WriteRecords(farmacos);
+            }
+
+            return farmacos;
+
         }
     }
 }

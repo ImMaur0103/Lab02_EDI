@@ -1,14 +1,15 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 
 namespace ListaDobleEnlace
 {
-    public class ListaDoble<T>:Nodo<T>
-    {
-        private Nodo<T> inicio = new Nodo<T>();
+    public class ListaDoble<T> : IEnumerable<T>
+    { 
+        public Nodo<T> inicio = new Nodo<T>();
         private Nodo<T> fin = new Nodo<T>();
-        int contador;
+        public int contador;
 
         public ListaDoble()
         {
@@ -131,6 +132,21 @@ namespace ListaDobleEnlace
                 return temporal.Valor;
             }
             return default(T);
+        }
+
+        public IEnumerator<T> GetEnumerator()
+        {
+            Nodo<T> nodo = inicio;
+            while (nodo != null)
+            {
+                yield return nodo.Valor;
+                nodo = nodo.Siguiente;
+            }
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator(); 
         }
     }
 }
