@@ -1,10 +1,21 @@
 ﻿@model IEnumerable<Lab02.Models.InfoFarmaco>
 
 @{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Ingrese archivo de inventario";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<h1>Cargar Datos</h1>
+<center><p class="h4">Faarmacos</p></center>
+<p></p>
+
+<form asp-controller="Home" asp-action="Index" method="post" enctype="multipart/form-data">
+    <div class="mb-3">
+        <label for="formFile" class="form-label">Seleccione archivo csv.</label>
+        <input class="form-control" type="file" name="file" id="formfile">
+    </div>
+    <center> <button type="submit" class="btn btn-outline-primary">Subir</button> </center>
+</form>
+
+<div>
+    <a asp-action="Add">Añadir Jugador...</a>
 </div>

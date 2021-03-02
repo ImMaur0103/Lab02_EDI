@@ -17,7 +17,7 @@ namespace Lab02.Models
         [Index(3)]
         public string CasaProductora { get; set; }
         [Index(4)]
-        public double Precio { get; set; }
+        public string Precio { get; set; }
         [Index(5)]
         public int Existencia { get; set; }
     }
