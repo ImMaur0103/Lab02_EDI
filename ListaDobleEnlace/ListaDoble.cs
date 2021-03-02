@@ -45,6 +45,26 @@ namespace ListaDobleEnlace
             return;
         }
 
+        public void InsertarFinal(T NuevoValor)
+        {
+            Nodo<T> nuevoNodo = new Nodo<T>();
+            nuevoNodo.Valor = NuevoValor;
+
+            if (ListaVacia())
+            {
+                inicio = nuevoNodo;
+                fin = nuevoNodo;
+            }
+            else
+            {
+                fin.Siguiente = nuevoNodo;
+                nuevoNodo.Anterior = fin; 
+                fin = nuevoNodo; 
+            }
+            contador++;
+            return;
+        }
+
         Nodo<T> ExtraerInicio()
         {
             Nodo<T> temporal = inicio;

@@ -80,7 +80,7 @@ namespace Lab02.Controllers
                 while (csv.Read())
                 {
                     var farmaco = csv.GetRecord<InfoFarmaco>();
-                    farmacos.InsertarInicio(farmaco);
+                    farmacos.InsertarFinal(farmaco);
                 }
             }
 
