@@ -109,5 +109,25 @@ namespace Arbol
                 Preorden(raiz.derecha, ListaInventario);
             }
         }
+
+        public void InOrden(Nodo<Farmaco> raiz, ListaDoble<Farmaco> ListaInventario)
+        {
+            if(raiz!= null)
+            {
+                InOrden(raiz.izquierda, ListaInventario);
+                ListaInventario.InsertarInicio(raiz.valor);
+                InOrden(raiz.derecha, ListaInventario);
+            }
+        }
+
+        public void PostOrden(Nodo<Farmaco> raiz, ListaDoble<Farmaco> ListaInventario)
+        {
+            if(raiz != null)
+            {
+                PostOrden(raiz.izquierda, ListaInventario);
+                PostOrden(raiz.derecha, ListaInventario);
+                ListaInventario.InsertarInicio(raiz.valor);
+            }
+        }
     }
 }
