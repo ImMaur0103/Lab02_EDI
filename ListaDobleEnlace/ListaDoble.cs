@@ -103,19 +103,19 @@ namespace ListaDobleEnlace
             return temporal;
         }
 
-        Nodo<T> ExtraerEnPosicion(int posicion)
+        public Nodo<T> ExtraerEnPosicion(int posicion)
         {
             Nodo<T> temporal = inicio;
 
             if (!ListaVacia())
             {
-                if ((contador == 1) && (posicion == 0))
+                if ((contador == 1) || (posicion == 0))
                 {
                     return ExtraerInicio();
                 }
                 else
                 {
-                    if (posicion >= contador)
+                    if (posicion >= contador - 1)
                     {
                         return ExtraerFinal();
                     }
@@ -127,6 +127,7 @@ namespace ListaDobleEnlace
                         while ((pos < posicion))
                         {
                             auxiliar = auxiliar.Siguiente;
+                            pos++;
                         }
                         auxiliar.Anterior.Siguiente = auxiliar.Siguiente;
                         auxiliar.Siguiente.Anterior = auxiliar.Anterior;
@@ -136,8 +137,7 @@ namespace ListaDobleEnlace
             }
             return temporal;
         }
-
-        T ObtenerValor(int posicion)
+        public T ObtenerValor(int posicion)
         {
             if (posicion >= 0 && posicion < contador)
             {
@@ -148,6 +148,7 @@ namespace ListaDobleEnlace
                 while (ubicacion < posicion)
                 {
                     temporal = temporal.Siguiente;
+                    ubicacion++;
                 }
                 return temporal.Valor;
             }
