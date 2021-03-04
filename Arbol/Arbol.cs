@@ -8,11 +8,13 @@ namespace Arbol
     public class Arbol<T>:Nodo<T>
     {
         public Nodo<T> raiz;
+        public int contador;
 
         //constructor 
         public Arbol()
         {
-            raiz = null; 
+            raiz = null;
+            contador = 0;
         }
 
         ~Arbol() { }
@@ -33,6 +35,7 @@ namespace Arbol
             {
                 raiz = InsertarNodo(raiz, NuevoNodo);
             }
+            contador++;
         }
 
         public T Mayor<T>(T valor1, T valor2) where T : IComparable
@@ -100,6 +103,7 @@ namespace Arbol
             return recorrer.valor.Numero_Linea;
         }
 
+        //Verifica el estado del índice, por lo que guarda los valores dentro de una lista tipo FARMACO
         public void Preorden(Nodo<Farmaco> raiz, ListaDoble<Farmaco> ListaInventario)
         {
             if (raiz!= null)

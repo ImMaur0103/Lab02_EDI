@@ -1,11 +1,11 @@
 ﻿@model IEnumerable<Lab02.Models.InfoFarmaco>
 
 @{
-    ViewData["Title"] = "Ingrese archivo de inventario";
+    ViewData["Title"] = "Upload";
 }
 
 <h1>Cargar Datos</h1>
-<center><p class="h4">Faarmacos</p></center>
+<center><p class="h4">FARMACOS</p></center>
 <p></p>
 
 <form asp-controller="Home" asp-action="Index" method="post" enctype="multipart/form-data">
@@ -16,6 +16,15 @@
     <center> <button type="submit" class="btn btn-outline-primary">Subir</button> </center>
 </form>
 
+<p>
+    <div class="d-grid gap-2">
+        <center>
+            <button class="btn btn-primary" onclick="location.href='@Url.Action("Pedido", "Home")'" input name="option" type="button">Realizar pedido</button>
+        </center>
+    </div>
+</p>
+
+<!--
 <div>
     <a asp-action="Add">Añadir Jugador...</a>
 </div>
@@ -73,3 +82,4 @@
         </tbody>
     </table>
 </p>
+-->

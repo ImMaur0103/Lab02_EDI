@@ -11,16 +11,15 @@ namespace Lab02.Extra
     public sealed class Singleton
     {
         private readonly static Singleton instance = new Singleton();
-        //public ListaDoble<Jugador> listaDoble;
-        public Arbol<Arbol.Farmaco> Indice;
-        public ListaDoble<Arbol.Farmaco> InventarioTipoArbolp;
-        public ListaDoble<InfoFarmaco> ListaFarmacos; 
+        public Arbol<Farmaco> Indice;
+        public ListaDoble<Farmaco> InventarioTipoArbolp;
+        public ListaDoble<InfoFarmaco> ListaFarmacos;
+        public ListaDoble<Farmaco> Inventario;
 
         private Singleton()
         {
             Indice = new Arbol<Arbol.Farmaco>();
             ListaFarmacos = new ListaDoble<InfoFarmaco>();
-            //listaDoble = new ListaDoble<Jugador>();
         }
 
         public void Actualizar()

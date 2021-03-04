@@ -40,15 +40,21 @@ namespace Lab02.Controllers
             return View();
         }
 
+        public IActionResult Pedido(string nombre, string direccion, string nit)
+        {
+            return View();
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
         // Metodo de busqueda
         public IActionResult Busqueda()
         {
-            Singleton.Instance.Indice.Preorden(Singleton.Instance.Indice.raiz, Singleton.Instance.ListaFarmacos);
+            Singleton.Instance.Indice.Preorden(Singleton.Instance.Indice.raiz, Singleton.Instance.Inventario);
             return View("Prueba");
         }
 
@@ -60,9 +66,9 @@ namespace Lab02.Controllers
             if(ListaFarmacos.inicio != null)
             {
                 Singleton.Instance.ListaFarmacos = ListaFarmacos;
-                Singleton.Instance.Actualizar();
+                Singleton.Instance.Actualizar(); // método que crea el árbol binario dentro del Arbol Indice
             }
-            return View(Singleton.Instance.ListaFarmacos);
+            return View(Singleton.Instance.ListaFarmacos); 
         }
 
         [HttpPost]
