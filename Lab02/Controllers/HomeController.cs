@@ -47,7 +47,7 @@ namespace Lab02.Controllers
             cadena = cadena.ToLower();
             ListaDoble<InfoFarmaco> infoFarmacos = null;
             Singleton.Instance.Pedido = null;
-            if(cadena != "")
+            if (cadena != "")
             {
                 int posicion = Singleton.Instance.Indice.Buscar(cadena);
                 InfoFarmaco infoFarmaco = Singleton.Instance.ListaFarmacos.ObtenerValor(posicion - 1);
@@ -55,7 +55,7 @@ namespace Lab02.Controllers
                 infoFarmacos.InsertarInicio(infoFarmaco);
                 Singleton.Instance.Pedido = infoFarmacos;
             }
-
+            cadena = "";
             return View(Singleton.Instance.Pedido);
         }
 
