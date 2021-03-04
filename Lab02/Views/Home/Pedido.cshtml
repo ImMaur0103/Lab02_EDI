@@ -27,17 +27,14 @@
         <center><div class="p-3 mb-2 bg-warning text-dark">Pedido</div></center>
     </p>
 
-    @using (Html.BeginForm("Pedido", "Home", FormMethod.Post))
-     {
-        <div>
-            <p>
-                @Html.TextBox("cadena", "", new { @class = "form-control" })
-                <center><button type="submit" class="btn btn-outline-primary">Buscar</button></center>
-            </p>
-        </div>
-     }
+    <div> 
+        <p>
+            @Html.TextBox("cadena", "", new { @class = "form-control" })
+            <center><button  type="submit" class="btn btn-outline-primary" , asp-action="Pedido">Buscar</button></center>
+        </p>
+    </div>
 
-
+    <h5 class="text-primary"> @ViewBag.Mensaje </h5>
     @if (Model != null)
     {
         <p>
@@ -67,26 +64,26 @@
                 <tbody>
                     @foreach (var item in Model)
                     {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.ID)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Nombre)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Descripcion)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.CasaProductora)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Precio)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Existencia)
-                        </td>
-                    </tr>
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ID)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Nombre)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Descripcion)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.CasaProductora)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Precio)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Existencia)
+                            </td>
+                        </tr>
                     }
                 </tbody>
             </table>

@@ -43,47 +43,17 @@ namespace Lab02.Controllers
 
         public IActionResult Caja()
         {
-            return View();
+            return View(Singleton.Instance.Compra);
         }
 
-        public IActionResult Agregar()
-        {
-            if(Singleton.Instance.Pedido != null && Singleton.Instance.Compra == null)
-            {
-                InfoFarmaco Medicamento;
-                Medicamento = Singleton.Instance.Pedido.ObtenerValor(0);
-                Medicamento.Existencia = 1;
-                Singleton.Instance.Compra.InsertarInicio(Medicamento);
-            }
-            else
-            {
-                int i = 0;
-                for(i = 0; i < Singleton.Instance.Compra.contador; i++)
-                {
-                    if (Singleton.Instance.Compra.ObtenerValor(i).Nombre == Singleton.Instance.Pedido.ObtenerValor(0).Nombre)
-                    {
-                        Singleton.Instance.Compra.ObtenerValor(i).Existencia++;
-                        return View("Pedido");
-                    }
-                }
-                InfoFarmaco Medicamento;
-                Medicamento = Singleton.Instance.Pedido.ObtenerValor(0);
-                Medicamento.Existencia = 1;
-                Singleton.Instance.Compra.InsertarFinal(Medicamento);
-
-            }
-
-
-            return View("Pedido");
-        }
 
         public IActionResult Pedido(string nombre, string direccion, string nit, string cadena = "")
         {
-            cadena = cadena.ToLower();
             ListaDoble<InfoFarmaco> infoFarmacos = null;
             Singleton.Instance.Pedido = null;
             if (cadena != "")
             {
+                cadena = cadena.ToLower();
                 int posicion = Singleton.Instance.Indice.Buscar(cadena);
                 InfoFarmaco infoFarmaco = Singleton.Instance.ListaFarmacos.ObtenerValor(posicion - 1);
                 infoFarmacos = new ListaDoble<InfoFarmaco>();
@@ -93,6 +63,56 @@ namespace Lab02.Controllers
             cadena = "";
             return View(Singleton.Instance.Pedido);
         }
+
+        public IActionResult Agregar()
+        {
+            if(Singleton.Instance.Pedido.inicio != null && Singleton.Instance.Compra.inicio == null)
+            {
+                InfoFarmaco Medicamento = new InfoFarmaco();
+                InfoFarmaco info = Singleton.Instance.Pedido.ObtenerValor(0);
+                Medicamento.Existencia = 1;
+                Medicamento.Nombre = info.Nombre;
+                Medicamento.ID = info.ID;
+                Medicamento.Descripcion = info.Descripcion;
+                Medicamento.CasaProductora = info.CasaProductora;
+                Medicamento.Precio = info.Precio;
+                Singleton.Instance.Compra.InsertarInicio(Medicamento);
+            }
+            else
+            {
+                int i = 0;
+                for(i = 0; i < Singleton.Instance.Compra.contador; i++)
+                {
+                    if (Singleton.Instance.Compra.ObtenerValor(i).Nombre == Singleton.Instance.Pedido.ObtenerValor(0).Nombre)
+                    {
+                        if (Singleton.Instance.Compra.ObtenerValor(i).Existencia < Singleton.Instance.Pedido.ObtenerValor(i).Existencia)
+                        {
+                            Singleton.Instance.Compra.ObtenerValor(i).Existencia++;
+                            return View("Pedido");
+                        }
+                        else
+                        {
+                            ViewBag.Mensaje = "Existencias insuficiente para aumentar su pedido";
+                            return View("Pedido");
+                        }
+                    }
+                }
+                InfoFarmaco Medicamento = new InfoFarmaco();
+                InfoFarmaco info = Singleton.Instance.Pedido.ObtenerValor(0);
+                Medicamento.Existencia = 1;
+                Medicamento.Nombre = info.Nombre;
+                Medicamento.ID = info.ID;
+                Medicamento.Descripcion = info.Descripcion;
+                Medicamento.CasaProductora = info.CasaProductora;
+                Medicamento.Precio = info.Precio;
+                Singleton.Instance.Compra.InsertarFinal(Medicamento);
+
+            }
+
+
+            return View("Pedido");
+        }
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
