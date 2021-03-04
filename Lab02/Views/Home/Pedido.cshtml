@@ -30,8 +30,10 @@
     @using (Html.BeginForm("Pedido", "Home", FormMethod.Post))
      {
         <div>
-            @Html.TextBox("cadena", "", new { @class = "form-control" })
-            <button type="submit" class="btn btn-default">Buscar</button>
+            <p>
+                @Html.TextBox("cadena", "", new { @class = "form-control" })
+                <center><button type="submit" class="btn btn-outline-primary">Buscar</button></center>
+            </p>
         </div>
      }
 

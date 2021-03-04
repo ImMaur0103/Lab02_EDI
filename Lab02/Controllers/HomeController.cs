@@ -41,6 +41,7 @@ namespace Lab02.Controllers
             return View();
         }
 
+
         public IActionResult Pedido(string nombre, string direccion, string nit, string cadena = "")
         {
             cadena = cadena.ToLower();
