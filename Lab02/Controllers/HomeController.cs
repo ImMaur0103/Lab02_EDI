@@ -36,11 +36,46 @@ namespace Lab02.Controllers
             return View();
         }
 
-        public IActionResult Prueba()
+        public IActionResult Buscar()
+        {
+            return View("Prueba");
+        }
+
+        public IActionResult Caja()
         {
             return View();
         }
 
+        public IActionResult Agregar()
+        {
+            if(Singleton.Instance.Pedido != null && Singleton.Instance.Compra == null)
+            {
+                InfoFarmaco Medicamento;
+                Medicamento = Singleton.Instance.Pedido.ObtenerValor(0);
+                Medicamento.Existencia = 1;
+                Singleton.Instance.Compra.InsertarInicio(Medicamento);
+            }
+            else
+            {
+                int i = 0;
+                for(i = 0; i < Singleton.Instance.Compra.contador; i++)
+                {
+                    if (Singleton.Instance.Compra.ObtenerValor(i).Nombre == Singleton.Instance.Pedido.ObtenerValor(0).Nombre)
+                    {
+                        Singleton.Instance.Compra.ObtenerValor(i).Existencia++;
+                        return View("Pedido");
+                    }
+                }
+                InfoFarmaco Medicamento;
+                Medicamento = Singleton.Instance.Pedido.ObtenerValor(0);
+                Medicamento.Existencia = 1;
+                Singleton.Instance.Compra.InsertarFinal(Medicamento);
+
+            }
+
+
+            return View("Pedido");
+        }
 
         public IActionResult Pedido(string nombre, string direccion, string nit, string cadena = "")
         {
@@ -66,10 +101,25 @@ namespace Lab02.Controllers
         }
 
         // Metodo de busqueda
-        public IActionResult Busqueda()
+        public IActionResult Busqueda(string cadena)
         {
-            Singleton.Instance.Indice.Preorden(Singleton.Instance.Indice.raiz, Singleton.Instance.Inventario);
-            return View("Prueba");
+
+            if (cadena != null)
+            {
+                ListaDoble<InfoFarmaco> infoFarmacos = null;
+                cadena = cadena.ToLower();
+                int posicion = Singleton.Instance.Indice.Buscar(cadena);
+                InfoFarmaco infoFarmaco = Singleton.Instance.ListaFarmacos.ObtenerValor(posicion - 1);
+                infoFarmacos = new ListaDoble<InfoFarmaco>();
+                infoFarmacos.InsertarInicio(infoFarmaco);
+                Singleton.Instance.Pedido = infoFarmacos;
+                return View("Prueba", Singleton.Instance.Pedido);
+            }
+            else
+            {
+                return View("Prueba");
+            }
+
         }
 
         // Método para leer archivo CSV

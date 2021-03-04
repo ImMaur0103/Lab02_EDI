@@ -1,4 +1,5 @@
 ﻿@model IEnumerable<Lab02.Models.InfoFarmaco>
+@{bool modelVacio = (Model != null);}
 
 @{
     ViewData["Title"] = "Prueba";
@@ -12,16 +13,17 @@
 
 <link href="~/css/all.min.css" rel="stylesheet" />
 
-<Div>
-    <button name="BotonBuscar" onclick="location.href='@Url.Action("Busqueda","Home")'"><i class="fas fa-searchfas fa-search"></i></button>
-    <input type="text" class="show" name="Buscador" placeholder="Buscar" />
-</Div>
+<form>
+    <button name="BotonBuscar" asp-action="Busqueda"><i class="fas fa-searchfas fa-search"></i></button>
+    @Html.TextBox("cadena", "", new { @class = "show", @placeholder = "Buscar por nombre", @size = "100"})
+    
+</form>
 
 <div>
-    <a asp-action="Index">Regresar</a>
+    <a asp-action="Busqueda">Regresar</a>
 </div>
 
-@if (false)
+@if (modelVacio)
 {
     <table class="table" cellpadding="0" cellspacing="0">
         <thead class="table-dark">

@@ -27,6 +27,10 @@ namespace ListaDobleEnlace
 
         public void InsertarInicio(T NuevoValor)
         {
+            if(NuevoValor == null)
+            {
+                return;
+            }
             Nodo<T> nuevoNodo = new Nodo<T>();
             nuevoNodo.Valor = NuevoValor;
 

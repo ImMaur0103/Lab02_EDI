@@ -104,6 +104,10 @@ namespace Arbol
                     }
                 }
             }
+            if(recorrer == null)
+            {
+                return -1;
+            }
             return recorrer.valor.Numero_Linea;
         }
 

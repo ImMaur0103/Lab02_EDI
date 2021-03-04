@@ -12,9 +12,11 @@ namespace Lab02.Extra
     {
         private readonly static Singleton instance = new Singleton();
         public Arbol<Farmaco> Indice;
-        public ListaDoble<InfoFarmaco> Pedido;
-        public ListaDoble<Farmaco> InventarioTipoArbolp;
         public ListaDoble<InfoFarmaco> ListaFarmacos;
+
+        public ListaDoble<InfoFarmaco> Pedido;
+        public ListaDoble<InfoFarmaco> Compra;
+        public ListaDoble<Farmaco> InventarioTipoArbol;
         public ListaDoble<Farmaco> Inventario;
 
         private Singleton()
@@ -22,6 +24,7 @@ namespace Lab02.Extra
             Indice = new Arbol<Farmaco>();
             ListaFarmacos = new ListaDoble<InfoFarmaco>();
             Pedido = new ListaDoble<InfoFarmaco>();
+            Compra = new ListaDoble<InfoFarmaco>();
         }
 
         public void Actualizar()
