@@ -82,9 +82,11 @@ namespace Arbol
         {
             Nodo<T> recorrer = raiz;
             bool encontrar = false;
-            while(recorrer != null || encontrar == false)
+            while(recorrer != null && encontrar == false)
             {
-                if(nombre == recorrer.valor.Nombre)
+                string valor = recorrer.valor.Nombre;
+                valor = valor.ToLower();
+                if(nombre == valor)
                 {
                     encontrar = true; 
                 }
@@ -93,10 +95,12 @@ namespace Arbol
                     if(nombre.CompareTo(recorrer.valor.Nombre) > 0)
                     {
                         recorrer = recorrer.derecha;
+                        encontrar = false;
                     }
                     else
                     {
                         recorrer = recorrer.izquierda;
+                        encontrar = false; 
                     }
                 }
             }

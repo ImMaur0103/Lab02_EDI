@@ -1,7 +1,10 @@
-﻿
+﻿@model IEnumerable<Lab02.Models.InfoFarmaco>
+
 @{
     ViewData["Title"] = "Pedido";
 }
+
+<!--Vista para agregar los datos del cliente y buscar los productos para agregar al pedido-->
 
 <center><p class="h4">INGRESAR PEDIDO</p></center>
 
@@ -19,6 +22,76 @@
         <label for="floatingInput">NIT</label>
         <input type="tel" class="form-control" name="nit" placeholder="NIT">
     </div>
+
+    <p>
+        <center><div class="p-3 mb-2 bg-warning text-dark">Pedido</div></center>
+    </p>
+
+    @using (Html.BeginForm("Pedido", "Home", FormMethod.Post))
+     {
+        <div>
+            @Html.TextBox("cadena", "", new { @class = "form-control" })
+            <button type="submit" class="btn btn-default">Buscar</button>
+        </div>
+     }
+
+
+    @if (Model != null)
+    {
+        <p>
+            <table class="table" cellpadding="0" cellspacing="0">
+                <thead class="table-dark">
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.ID)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Nombre)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Descripcion)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.CasaProductora)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Precio)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Existencia)
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ID)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Nombre)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Descripcion)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CasaProductora)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Precio)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Existencia)
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </p>
+    }
+
+    <center> <button type="submit" class="btn btn-outline-primary" id="btnAgregar">Agregar</button> </center>
 
 </form>
 

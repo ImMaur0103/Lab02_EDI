@@ -13,6 +13,7 @@ using System.IO;
 using ListaDobleEnlace;
 using CsvHelper;
 using System.Globalization;
+using Arbol;
 
 namespace Lab02.Controllers
 {
@@ -40,9 +41,21 @@ namespace Lab02.Controllers
             return View();
         }
 
-        public IActionResult Pedido(string nombre, string direccion, string nit)
+        public IActionResult Pedido(string nombre, string direccion, string nit, string cadena = "")
         {
-            return View();
+            cadena = cadena.ToLower();
+            ListaDoble<InfoFarmaco> infoFarmacos = null;
+            Singleton.Instance.Pedido = null;
+            if(cadena != "")
+            {
+                int posicion = Singleton.Instance.Indice.Buscar(cadena);
+                InfoFarmaco infoFarmaco = Singleton.Instance.ListaFarmacos.ObtenerValor(posicion - 1);
+                infoFarmacos = new ListaDoble<InfoFarmaco>();
+                infoFarmacos.InsertarInicio(infoFarmaco);
+                Singleton.Instance.Pedido = infoFarmacos;
+            }
+
+            return View(Singleton.Instance.Pedido);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
