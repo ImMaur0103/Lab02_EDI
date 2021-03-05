@@ -124,7 +124,7 @@ namespace Arbol
             //ListaInventario = new ListaDoble<Farmaco>();
             if (raiz!= null)
             {
-                ListaInventario.InsertarInicio(raiz.valor);
+                ListaInventario.InsertarFinal(raiz.valor);
                 Preorden(raiz.izquierda, ref ListaInventario);
                 Preorden(raiz.derecha, ref ListaInventario);
             }
@@ -135,7 +135,7 @@ namespace Arbol
             if(raiz!= null)
             {
                 InOrden(raiz.izquierda,ref ListaInventario);
-                ListaInventario.InsertarInicio(raiz.valor);
+                ListaInventario.InsertarFinal(raiz.valor);
                 InOrden(raiz.derecha,ref ListaInventario);
             }
         }
@@ -146,7 +146,7 @@ namespace Arbol
             {
                 PostOrden(raiz.izquierda, ref ListaInventario);
                 PostOrden(raiz.derecha, ref ListaInventario);
-                ListaInventario.InsertarInicio(raiz.valor);
+                ListaInventario.InsertarFinal(raiz.valor);
             }
         }
     }

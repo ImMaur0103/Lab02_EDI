@@ -49,7 +49,7 @@ namespace Lab02.Controllers
 
         public IActionResult Privacy()
         {
-            ListaToArbol(Singleton.Instance.Indice, 1);
+            Singleton.Instance.Ordenamiento = ListaToArbol(Singleton.Instance.Indice, 1);
             return ExportarCSV(Singleton.Instance.Ordenamiento);
         }
 
@@ -178,7 +178,7 @@ namespace Lab02.Controllers
                 }
                 for(int i = 0; i < Singleton.Instance.InventarioTipoArbol.contador; i++)
                 {
-                    Singleton.Instance.ListaFarmacosOrdenados.InsertarInicio(Singleton.Instance.ListaFarmacos.ObtenerValor(Singleton.Instance.InventarioTipoArbol.ObtenerValor(i).Numero_Linea - 1));
+                    Singleton.Instance.ListaFarmacosOrdenados.InsertarFinal(Singleton.Instance.ListaFarmacos.ObtenerValor(Singleton.Instance.InventarioTipoArbol.ObtenerValor(i).Numero_Linea - 1));
                 }
             }
             else
@@ -201,7 +201,7 @@ namespace Lab02.Controllers
                 }
                 for (int i = 0; i < Singleton.Instance.InventarioTipoArbol.contador; i++)
                 {
-                    Singleton.Instance.ListaFarmacosOrdenados.InsertarInicio(Singleton.Instance.ListaFarmacos.ObtenerValor(Singleton.Instance.InventarioTipoArbol.ObtenerValor(i).Numero_Linea - 1));
+                    Singleton.Instance.ListaFarmacosOrdenados.InsertarFinal(Singleton.Instance.ListaFarmacos.ObtenerValor(Singleton.Instance.InventarioTipoArbol.ObtenerValor(i).Numero_Linea - 1));
                 }
             }
             else
@@ -224,7 +224,7 @@ namespace Lab02.Controllers
                 }
                 for (int i = 0; i < Singleton.Instance.InventarioTipoArbol.contador; i++)
                 {
-                    Singleton.Instance.ListaFarmacosOrdenados.InsertarInicio(Singleton.Instance.ListaFarmacos.ObtenerValor(Singleton.Instance.InventarioTipoArbol.ObtenerValor(i).Numero_Linea - 1));
+                    Singleton.Instance.ListaFarmacosOrdenados.InsertarFinal(Singleton.Instance.ListaFarmacos.ObtenerValor(Singleton.Instance.InventarioTipoArbol.ObtenerValor(i).Numero_Linea - 1));
                 }
             }
             else
@@ -332,13 +332,13 @@ namespace Lab02.Controllers
             switch (caso)
             {
                 case 1:
-                    ArbolFarmacos.Preorden(ArbolFarmacos, ListaFarmacos);
+                    ArbolFarmacos.Preorden(ArbolFarmacos.raiz,ref ListaFarmacos);
                     break;
                 case 2:
-                    ArbolFarmacos.InOrden(ArbolFarmacos, ListaFarmacos);
+                    ArbolFarmacos.InOrden(ArbolFarmacos.raiz, ref ListaFarmacos);
                     break;
                 case 3:
-                    ArbolFarmacos.PostOrden(ArbolFarmacos, ListaFarmacos);
+                    ArbolFarmacos.PostOrden(ArbolFarmacos.raiz, ref ListaFarmacos);
                     break;
             }
             return ListaFarmacos;
@@ -348,7 +348,7 @@ namespace Lab02.Controllers
         // Método para exportar archivo CSV.
         public IActionResult ExportarCSV(ListaDoble<Farmaco> Lista)
         {
-            Singleton.Instance.Indice.Preorden(Singleton.Instance.Indice, Singleton.Instance.Ordenamiento);
+            Singleton.Instance.Indice.Preorden(Singleton.Instance.Indice,ref Singleton.Instance.Ordenamiento);
             var builder = new StringBuilder();
             builder.AppendLine("No_Linea,Nombre");
             foreach (var Farmaco in Lista)
