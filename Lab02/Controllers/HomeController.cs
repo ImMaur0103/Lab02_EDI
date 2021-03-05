@@ -19,6 +19,8 @@ namespace Lab02.Controllers
 {
     public class HomeController : Controller
     {
+        public double total = 0;
+
         private readonly ILogger<HomeController> _logger;
 
         public HomeController(ILogger<HomeController> logger)
@@ -43,6 +45,8 @@ namespace Lab02.Controllers
         
         public IActionResult Caja()
         {
+            total = Math.Round(Total(Singleton.Instance.Compra), 2);
+            ViewData["Total"] = "TOTAL: $ " + total.ToString(); 
             return View(Singleton.Instance.Compra);
         }
 
@@ -82,7 +86,7 @@ namespace Lab02.Controllers
                 Medicamento.Precio = info.Precio;
                 Singleton.Instance.Compra.InsertarInicio(Medicamento);
                 Singleton.Instance.ListaFarmacos.ObtenerValor(Singleton.Instance.Compra.ObtenerValor(0).ID - 1).Existencia--;
-            }
+             }
             else if (Singleton.Instance.Pedido != null)
             {
                 int i = 0;
@@ -113,9 +117,24 @@ namespace Lab02.Controllers
                 Medicamento.Precio = info.Precio;
                 Singleton.Instance.Compra.InsertarFinal(Medicamento);
                 Singleton.Instance.ListaFarmacos.ObtenerValor(Singleton.Instance.Compra.ObtenerValor(i).ID - 1).Existencia--;
-
             }
             return View("Pedido");
+        }
+
+        double Total(ListaDoble<InfoFarmaco> ListaCompra)
+        {
+            InfoFarmaco info = new InfoFarmaco();
+            
+            for (int i = 0; i < ListaCompra.contador; i++)
+            {
+                info = ListaCompra.ObtenerValor(i);
+                string precioString = info.Precio;
+                precioString = precioString.Trim('$');
+                double precio = Convert.ToDouble(precioString);
+                total += precio;
+            }
+
+            return total; 
         }
 
 
