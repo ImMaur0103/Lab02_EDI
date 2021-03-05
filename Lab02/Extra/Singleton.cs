@@ -12,6 +12,7 @@ namespace Lab02.Extra
     {
         private readonly static Singleton instance = new Singleton();
         public Arbol<Farmaco> Indice;
+        public Arbol<Farmaco> SinExistencias;
         public ListaDoble<InfoFarmaco> ListaFarmacos;
 
         public ListaDoble<InfoFarmaco> Pedido;
@@ -21,7 +22,11 @@ namespace Lab02.Extra
 
         private Singleton()
         {
+            //Arboles
             Indice = new Arbol<Farmaco>();
+            SinExistencias = new Arbol<Farmaco>();
+
+            //Listas
             ListaFarmacos = new ListaDoble<InfoFarmaco>();
             Pedido = new ListaDoble<InfoFarmaco>();
             Compra = new ListaDoble<InfoFarmaco>();
@@ -29,18 +34,30 @@ namespace Lab02.Extra
 
         public void Actualizar()
         {
+            if(Indice.raiz != null)
+            {
+                Indice.Delete();
+                SinExistencias.Delete();
+            }
             for (int i = 0; i < ListaFarmacos.contador; i++)
             {
 
                 Farmaco NuevoFarmaco = new Farmaco();
                 InfoFarmaco FarmacoNuevo = new InfoFarmaco();
                 FarmacoNuevo = ListaFarmacos.ObtenerValor(i);
-                FarmacoNuevo = ListaFarmacos.ObtenerValor(i);
 
                 NuevoFarmaco.Nombre = FarmacoNuevo.Nombre;
                 NuevoFarmaco.Numero_Linea = FarmacoNuevo.ID;
 
-                Indice.Insertar(NuevoFarmaco);
+                if (FarmacoNuevo.Existencia != 0)
+                {
+                    Indice.Insertar(NuevoFarmaco);
+                }
+                else
+                {
+                    SinExistencias.Insertar(NuevoFarmaco);
+                }
+
             }
         }
         public static Singleton Instance

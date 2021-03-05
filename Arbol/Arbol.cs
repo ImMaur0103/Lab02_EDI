@@ -106,9 +106,15 @@ namespace Arbol
             }
             if(recorrer == null)
             {
-                return -1;
+                return 0;
             }
             return recorrer.valor.Numero_Linea;
+        }
+
+        public void Delete()
+        {
+            raiz = null;
+            contador = 0;
         }
 
         //Verifica el estado del índice, por lo que guarda los valores dentro de una lista tipo FARMACO
