@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using ListaDobleEnlace;
 
+
 namespace Arbol
 {
     public class Arbol<T>:Nodo<T>
@@ -120,6 +121,7 @@ namespace Arbol
         //Verifica el estado del índice, por lo que guarda los valores dentro de una lista tipo FARMACO
         public void Preorden(Nodo<Farmaco> raiz, ListaDoble<Farmaco> ListaInventario)
         {
+            //ListaInventario = new ListaDoble<Farmaco>();
             if (raiz!= null)
             {
                 ListaInventario.InsertarInicio(raiz.valor);

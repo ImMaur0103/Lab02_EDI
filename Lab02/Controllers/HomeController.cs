@@ -14,6 +14,7 @@ using ListaDobleEnlace;
 using CsvHelper;
 using System.Globalization;
 using Arbol;
+using System.Text;
 
 namespace Lab02.Controllers
 {
@@ -28,14 +29,28 @@ namespace Lab02.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index(string option)
+        public IActionResult Index(string option, string ordenamiento)
         {
+            switch (ordenamiento)
+            {
+                case "PreOrden":
+                    Singleton.Instance.Ordenamiento = ListaToArbol(Singleton.Instance.Indice, 1);
+                    break;
+                case "InOrden":
+                    Singleton.Instance.Ordenamiento = ListaToArbol(Singleton.Instance.Indice, 2);
+                    break;
+                case "PostOrden":
+                    Singleton.Instance.Ordenamiento = ListaToArbol(Singleton.Instance.Indice, 3);
+                    break;
+            }
+
             return View();
         }
 
         public IActionResult Privacy()
         {
-            return View();
+            ListaToArbol(Singleton.Instance.Indice, 1);
+            return ExportarCSV(Singleton.Instance.Ordenamiento);
         }
 
         public IActionResult Buscar()
@@ -176,6 +191,7 @@ namespace Lab02.Controllers
                 Singleton.Instance.ListaFarmacos = ListaFarmacos;
                 Singleton.Instance.Actualizar(); // método que crea el árbol binario dentro del Arbol Indice
             }
+
             return View(Singleton.Instance.ListaFarmacos); 
         }
 
@@ -219,6 +235,42 @@ namespace Lab02.Controllers
 
             return farmacos;
 
+            //Lista que se utilizará para realizar cada tipo de ordenamiento.
+            //Singleton.Instance.Ordenamiento = ListaToArbol(Singleton.Instance.Indice, 1);
+        }
+
+        ListaDoble<Farmaco> ListaToArbol(Arbol<Farmaco> ArbolFarmacos, int caso)
+        {
+            ListaDoble<Farmaco> ListaFarmacos = new ListaDoble<Farmaco>();
+
+            switch (caso)
+            {
+                case 1:
+                    ArbolFarmacos.Preorden(ArbolFarmacos, ListaFarmacos);
+                    break;
+                case 2:
+                    ArbolFarmacos.InOrden(ArbolFarmacos, ListaFarmacos);
+                    break;
+                case 3:
+                    ArbolFarmacos.PostOrden(ArbolFarmacos, ListaFarmacos);
+                    break;
+            }
+            return ListaFarmacos;
+        }
+
+
+        // Método para exportar archivo CSV.
+        public IActionResult ExportarCSV(ListaDoble<Farmaco> Lista)
+        {
+            Singleton.Instance.Indice.Preorden(Singleton.Instance.Indice, Singleton.Instance.Ordenamiento);
+            var builder = new StringBuilder();
+            builder.AppendLine("No_Linea,Nombre");
+            foreach (var Farmaco in Lista)
+            {
+                builder.AppendLine($"{Farmaco.Numero_Linea},{Farmaco.Nombre}");
+            }
+
+            return File(Encoding.UTF8.GetBytes(builder.ToString()), "text/csv", "EstadoIndice.csv");
         }
     }
 }

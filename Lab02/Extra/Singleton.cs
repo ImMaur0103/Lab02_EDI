@@ -13,12 +13,13 @@ namespace Lab02.Extra
         private readonly static Singleton instance = new Singleton();
         public Arbol<Farmaco> Indice;
         public Arbol<Farmaco> SinExistencias;
-        public ListaDoble<InfoFarmaco> ListaFarmacos;
 
+        public ListaDoble<InfoFarmaco> ListaFarmacos;
+        public ListaDoble<Farmaco> Ordenamiento; 
         public ListaDoble<InfoFarmaco> Pedido;
         public ListaDoble<InfoFarmaco> Compra;
-        public ListaDoble<Farmaco> InventarioTipoArbol;
-        public ListaDoble<Farmaco> Inventario;
+        public ListaDoble<Farmaco> InventarioTipoArbol; // Lista no se usa 
+        public ListaDoble<Farmaco> Inventario; // Lista no se usa
 
         private Singleton()
         {
@@ -27,6 +28,7 @@ namespace Lab02.Extra
             SinExistencias = new Arbol<Farmaco>();
 
             //Listas
+            Ordenamiento = new ListaDoble<Farmaco>();
             ListaFarmacos = new ListaDoble<InfoFarmaco>();
             Pedido = new ListaDoble<InfoFarmaco>();
             Compra = new ListaDoble<InfoFarmaco>();
