@@ -15,12 +15,14 @@ namespace Lab02.Extra
         public Arbol<Farmaco> SinExistencias;
 
 
-        public ListaDoble<InfoFarmaco> ListaFarmacos;
+
         public ListaDoble<InfoFarmaco> ListaFarmacosOrdenados;
+        public ListaDoble<InfoFarmaco> ListaFarmacos;
+        public ListaDoble<Farmaco> Ordenamiento; 
         public ListaDoble<InfoFarmaco> Pedido;
         public ListaDoble<InfoFarmaco> Compra;
         public ListaDoble<Farmaco> InventarioTipoArbol;
-        public ListaDoble<Farmaco> Inventario;
+        public ListaDoble<Farmaco> Inventario; // Lista no se usa
 
         private Singleton()
         {
@@ -29,6 +31,7 @@ namespace Lab02.Extra
             SinExistencias = new Arbol<Farmaco>();
 
             //Listas
+            Ordenamiento = new ListaDoble<Farmaco>();
             ListaFarmacosOrdenados = new ListaDoble<InfoFarmaco>();
             ListaFarmacos = new ListaDoble<InfoFarmaco>();
             Pedido = new ListaDoble<InfoFarmaco>();
