@@ -118,32 +118,32 @@ namespace Arbol
         }
 
         //Verifica el estado del índice, por lo que guarda los valores dentro de una lista tipo FARMACO
-        public void Preorden(Nodo<Farmaco> raiz, ListaDoble<Farmaco> ListaInventario)
+        public void Preorden(Nodo<Farmaco> raiz, ref ListaDoble<Farmaco> ListaInventario)
         {
             if (raiz!= null)
             {
                 ListaInventario.InsertarInicio(raiz.valor);
-                Preorden(raiz.izquierda, ListaInventario);
-                Preorden(raiz.derecha, ListaInventario);
+                Preorden(raiz.izquierda, ref ListaInventario);
+                Preorden(raiz.derecha, ref ListaInventario);
             }
         }
 
-        public void InOrden(Nodo<Farmaco> raiz, ListaDoble<Farmaco> ListaInventario)
+        public void InOrden(Nodo<Farmaco> raiz,ref ListaDoble<Farmaco> ListaInventario)
         {
             if(raiz!= null)
             {
-                InOrden(raiz.izquierda, ListaInventario);
+                InOrden(raiz.izquierda,ref ListaInventario);
                 ListaInventario.InsertarInicio(raiz.valor);
-                InOrden(raiz.derecha, ListaInventario);
+                InOrden(raiz.derecha,ref ListaInventario);
             }
         }
 
-        public void PostOrden(Nodo<Farmaco> raiz, ListaDoble<Farmaco> ListaInventario)
+        public void PostOrden(Nodo<Farmaco> raiz,ref ListaDoble<Farmaco> ListaInventario)
         {
             if(raiz != null)
             {
-                PostOrden(raiz.izquierda, ListaInventario);
-                PostOrden(raiz.derecha, ListaInventario);
+                PostOrden(raiz.izquierda, ref ListaInventario);
+                PostOrden(raiz.derecha, ref ListaInventario);
                 ListaInventario.InsertarInicio(raiz.valor);
             }
         }
