@@ -59,8 +59,9 @@ namespace Lab02.Controllers
         
         public IActionResult Inventario(bool Rellenar)
         {
-            if (true){
-
+            if (Rellenar)
+            {
+                //codigo relleno
             }
             return View("Prueba", Singleton.Instance.ListaFarmacos);
         }

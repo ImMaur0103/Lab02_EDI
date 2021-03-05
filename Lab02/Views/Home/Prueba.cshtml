@@ -15,7 +15,7 @@
     <button name="BotonOrdenarPost" class="btn btn-outline-primary" asp-action="PostOrder"><i class="fas fa-sort-alpha-down"> Post-Order</i></button>
     <button name="BotonOrdenaInr" class="btn btn-outline-primary" asp-action="OrdenAlfabetico"><i class="fas fa-sort-alpha-down"> In-Order</i></button>
     <button name="BotonOrdenarID" class="btn btn-outline-primary" asp-action="Inventario"><i class="fas fa-sort-numeric-down-alt"> Orden por ID</i></button>
-    <button name="Rellenar" class="btn btn-outline-primary" asp-action="Inventario"><i class="fas fa-paint-roller"> Rellenar</i></button>
+    <button type="button" name="Rellenar" class="btn btn-outline-primary" onclick="location.href='@Url.Action("Inventario", "Home", new { Rellenar = true })'"> <i class="fas fa-paint-roller"> Rellenar</i></button>
 
     @if (modelVacio)
     {
