@@ -61,7 +61,7 @@ namespace Lab02.Controllers
         {
             if (Rellenar)
             {
-                //codigo relleno
+                RellenarInventario();
             }
             return View("Prueba", Singleton.Instance.ListaFarmacos);
         }
@@ -154,6 +154,7 @@ namespace Lab02.Controllers
                 string precioString = info.Precio;
                 precioString = precioString.Trim('$');
                 double precio = Convert.ToDouble(precioString);
+                precio *= info.Existencia;
                 total += precio;
             }
 
@@ -162,7 +163,20 @@ namespace Lab02.Controllers
 
         void RellenarInventario()
         {
+            InfoFarmaco infoFarmaco = new InfoFarmaco();
+            Farmaco farmaco = new Farmaco();
+            Random rndm = new Random();
+            ListaDoble<Farmaco> ListaSinExistencia = new ListaDoble<Farmaco>();
+            //ListaSinExistencia.Vaciar(); 
+            Singleton.Instance.SinExistencias.InOrden(Singleton.Instance.SinExistencias.raiz,ref ListaSinExistencia);
 
+            for (int i = 0; i < ListaSinExistencia.contador; i++)
+            {
+                farmaco = ListaSinExistencia.ObtenerValor(i);
+                int IDFarmaco = farmaco.Numero_Linea - 1;
+                infoFarmaco = Singleton.Instance.ListaFarmacos.ObtenerValor(IDFarmaco);
+                infoFarmaco.Existencia = rndm.Next(1, 15);
+            }
         }
 
         public IActionResult OrdenAlfabetico()
