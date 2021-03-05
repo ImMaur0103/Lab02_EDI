@@ -28,15 +28,14 @@
         </center>
     </div>
 </p>
+<form method="get">
+    <div class="text-center">
+        <h1 class="display-4">Seleccione estructura de datos a utilizar</h1>
 
-
-<div class="text-center">
-    <h1 class="display-4">Seleccione estructura de datos a utilizar</h1>
-
-    <div class="d-grid gap-2">
-        <button class="btn btn-primary" onclick="location.href='@Url.Action("Privacy", "Home")'" input name="option" type="button" id="PreOrden">Indice Pre-Orden</button>
-        <button class="btn btn-primary" onclick="location.href='@Url.Action("Privacy", "Home")'" input name="option" type="button" id="InOrden">Indice In-Orden</button>
-        <button class="btn btn-primary" onclick="location.href='@Url.Action("Privacy", "Home")'" input name="option" type="button" id="PostOrden">Indice Post-Orden</button>
+        <div class="d-grid gap-2">
+            <button class="btn btn-primary" onclick="location.href='@Url.Action("Privacy", "Home", new { id = "PreOrden"})'" name="option1" type="button" id="PreOrden">Indice Pre-Orden</button>
+            <button class="btn btn-primary" onclick="location.href='@Url.Action("Privacy", "Home", new { id = "InOrden"})'" name="option2" type="button" id="InOrden">Indice In-Orden</button>
+            <button class="btn btn-primary" onclick="location.href='@Url.Action("Privacy", "Home", new { id = "PostOrden"})'" name="option3" type="button" id="PostOrden">Indice Post-Orden</button>
+        </div>
     </div>
-
-
+</form>

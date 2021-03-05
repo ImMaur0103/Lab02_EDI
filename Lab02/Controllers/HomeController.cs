@@ -29,9 +29,15 @@ namespace Lab02.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index(string option, string ordenamiento)
+        public IActionResult Index(string option)
         {
-            switch (ordenamiento)
+            return View();
+        }
+
+        public IActionResult Privacy(string id)
+        {
+            
+            switch (id)
             {
                 case "PreOrden":
                     Singleton.Instance.Ordenamiento = ListaToArbol(Singleton.Instance.Indice, 1);
@@ -43,13 +49,6 @@ namespace Lab02.Controllers
                     Singleton.Instance.Ordenamiento = ListaToArbol(Singleton.Instance.Indice, 3);
                     break;
             }
-
-            return View();
-        }
-
-        public IActionResult Privacy()
-        {
-            Singleton.Instance.Ordenamiento = ListaToArbol(Singleton.Instance.Indice, 1);
             return ExportarCSV(Singleton.Instance.Ordenamiento);
         }
 
@@ -348,7 +347,6 @@ namespace Lab02.Controllers
         // Método para exportar archivo CSV.
         public IActionResult ExportarCSV(ListaDoble<Farmaco> Lista)
         {
-            Singleton.Instance.Indice.Preorden(Singleton.Instance.Indice,ref Singleton.Instance.Ordenamiento);
             var builder = new StringBuilder();
             builder.AppendLine("No_Linea,Nombre");
             foreach (var Farmaco in Lista)
