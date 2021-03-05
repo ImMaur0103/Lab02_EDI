@@ -43,13 +43,21 @@ namespace Lab02.Controllers
             return View("Pedido");
         }
         
+        public IActionResult Inventario(bool Rellenar)
+        {
+            if (true){
+
+            }
+            return View("Prueba", Singleton.Instance.ListaFarmacos);
+        }
+
+        //View con codigo de funcionamiento
         public IActionResult Caja()
         {
             total = Math.Round(Total(Singleton.Instance.Compra), 2);
             ViewData["Total"] = "TOTAL: $ " + total.ToString(); 
             return View(Singleton.Instance.Compra);
         }
-
 
         public IActionResult Pedido(string nombre, string direccion, string nit, string cadena = "")
         {
@@ -94,7 +102,7 @@ namespace Lab02.Controllers
                 {
                     if (Singleton.Instance.Compra.ObtenerValor(i).Nombre == Singleton.Instance.Pedido.ObtenerValor(0).Nombre)
                     {
-                        if (Singleton.Instance.Pedido.ObtenerValor(i).Existencia > 0)
+                        if (Singleton.Instance.Pedido.ObtenerValor(0).Existencia > 0)
                         {
                             Singleton.Instance.Compra.ObtenerValor(i).Existencia++;
                             Singleton.Instance.ListaFarmacos.ObtenerValor(Singleton.Instance.Compra.ObtenerValor(i).ID - 1).Existencia--;
@@ -137,6 +145,79 @@ namespace Lab02.Controllers
             return total; 
         }
 
+        void RellenarInventario()
+        {
+
+        }
+
+        public IActionResult OrdenAlfabetico()
+        {
+            if(Singleton.Instance.ListaFarmacos.inicio != null)
+            {
+                Singleton.Instance.ListaFarmacosOrdenados.Vaciar();
+                Singleton.Instance.InventarioTipoArbol.Vaciar();
+                Singleton.Instance.Indice.InOrden(Singleton.Instance.Indice.raiz,ref Singleton.Instance.InventarioTipoArbol);
+                if(Singleton.Instance.SinExistencias.raiz != null)
+                {
+                    Singleton.Instance.SinExistencias.InOrden(Singleton.Instance.SinExistencias.raiz,ref Singleton.Instance.InventarioTipoArbol);
+                }
+                for(int i = 0; i < Singleton.Instance.InventarioTipoArbol.contador; i++)
+                {
+                    Singleton.Instance.ListaFarmacosOrdenados.InsertarInicio(Singleton.Instance.ListaFarmacos.ObtenerValor(Singleton.Instance.InventarioTipoArbol.ObtenerValor(i).Numero_Linea - 1));
+                }
+            }
+            else
+            {
+                return View("Prueba", Singleton.Instance.ListaFarmacos);
+            }
+            return View("Prueba", Singleton.Instance.ListaFarmacosOrdenados);
+        }
+
+        public IActionResult PreOrder()
+        {
+            if (Singleton.Instance.ListaFarmacos.inicio != null)
+            {
+                Singleton.Instance.ListaFarmacosOrdenados.Vaciar();
+                Singleton.Instance.InventarioTipoArbol.Vaciar();
+                Singleton.Instance.Indice.Preorden(Singleton.Instance.Indice.raiz, ref Singleton.Instance.InventarioTipoArbol);
+                if (Singleton.Instance.SinExistencias.raiz != null)
+                {
+                    Singleton.Instance.SinExistencias.Preorden(Singleton.Instance.SinExistencias.raiz, ref Singleton.Instance.InventarioTipoArbol);
+                }
+                for (int i = 0; i < Singleton.Instance.InventarioTipoArbol.contador; i++)
+                {
+                    Singleton.Instance.ListaFarmacosOrdenados.InsertarInicio(Singleton.Instance.ListaFarmacos.ObtenerValor(Singleton.Instance.InventarioTipoArbol.ObtenerValor(i).Numero_Linea - 1));
+                }
+            }
+            else
+            {
+                return View("Prueba", Singleton.Instance.ListaFarmacos);
+            }
+            return View("Prueba", Singleton.Instance.ListaFarmacosOrdenados);
+        }
+
+        public IActionResult PostOrder()
+        {
+            if (Singleton.Instance.ListaFarmacos.inicio != null)
+            {
+                Singleton.Instance.ListaFarmacosOrdenados.Vaciar();
+                Singleton.Instance.InventarioTipoArbol.Vaciar();
+                Singleton.Instance.Indice.PostOrden(Singleton.Instance.Indice.raiz, ref Singleton.Instance.InventarioTipoArbol);
+                if (Singleton.Instance.SinExistencias.raiz != null)
+                {
+                    Singleton.Instance.SinExistencias.PostOrden(Singleton.Instance.SinExistencias.raiz, ref Singleton.Instance.InventarioTipoArbol);
+                }
+                for (int i = 0; i < Singleton.Instance.InventarioTipoArbol.contador; i++)
+                {
+                    Singleton.Instance.ListaFarmacosOrdenados.InsertarInicio(Singleton.Instance.ListaFarmacos.ObtenerValor(Singleton.Instance.InventarioTipoArbol.ObtenerValor(i).Numero_Linea - 1));
+                }
+            }
+            else
+            {
+                return View("Prueba", Singleton.Instance.ListaFarmacos);
+            }
+            return View("Prueba", Singleton.Instance.ListaFarmacosOrdenados);
+        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
@@ -144,10 +225,15 @@ namespace Lab02.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        // Metodo de busqueda
+        // Metodo de busqueda 
         public IActionResult Busqueda(string cadena)
         {
-
+            /* Funcion usada en el view para obterner un buscar mas estetico
+            <form>
+                <button name="BotonBuscar" asp-action="Busqueda"><i class="fas fa-searchfas fa-search"></i></button>
+                @Html.TextBox("cadena", "", new { @class = "show", @placeholder = "Buscar por nombre", @size = "100"})
+            </form>
+            */
             if (cadena != null)
             {
                 ListaDoble<InfoFarmaco> infoFarmacos = null;

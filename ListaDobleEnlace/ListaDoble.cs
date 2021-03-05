@@ -25,6 +25,16 @@ namespace ListaDobleEnlace
             return contador == 0;
         }
 
+        public void Vaciar()
+        {
+            if(inicio != null)
+            {
+                inicio = null;
+                fin = null;
+                contador = 0;
+            }
+        }
+
         public void InsertarInicio(T NuevoValor)
         {
             if(NuevoValor == null)
@@ -67,44 +77,6 @@ namespace ListaDobleEnlace
             }
             contador++;
             return;
-        }
-
-        Nodo<T> ExtraerInicio()
-        {
-            Nodo<T> temporal = inicio;
-
-            if (!ListaVacia())
-            {
-                inicio = inicio.Siguiente;
-                inicio.Anterior = null;
-                if (contador == 1)
-                {
-                    fin = inicio;
-                }
-                contador--;
-            }
-            return temporal;
-        }
-
-        Nodo<T> ExtraerFinal()
-        {
-            Nodo<T> temporal = fin;
-
-            if (!ListaVacia())
-            {
-                if (contador == 1)
-                {
-                    fin = fin.Siguiente;
-                    inicio = fin;
-                }
-                else
-                {
-                    fin = fin.Anterior;
-                    fin.Siguiente = null;
-                }
-                contador--;
-            }
-            return temporal;
         }
 
         public Nodo<T> ExtraerEnPosicion(int posicion)
@@ -157,6 +129,44 @@ namespace ListaDobleEnlace
                 return temporal.Valor;
             }
             return default(T);
+        }
+
+        Nodo<T> ExtraerInicio()
+        {
+            Nodo<T> temporal = inicio;
+
+            if (!ListaVacia())
+            {
+                inicio = inicio.Siguiente;
+                inicio.Anterior = null;
+                if (contador == 1)
+                {
+                    fin = inicio;
+                }
+                contador--;
+            }
+            return temporal;
+        }
+
+        Nodo<T> ExtraerFinal()
+        {
+            Nodo<T> temporal = fin;
+
+            if (!ListaVacia())
+            {
+                if (contador == 1)
+                {
+                    fin = fin.Siguiente;
+                    inicio = fin;
+                }
+                else
+                {
+                    fin = fin.Anterior;
+                    fin.Siguiente = null;
+                }
+                contador--;
+            }
+            return temporal;
         }
 
         public IEnumerator<T> GetEnumerator()
