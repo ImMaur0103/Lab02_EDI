@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.Text;
 using ListaDobleEnlace;
-
+using ArbolAVL;
 
 namespace Arbol
 {
     public class Arbol<T>:Nodo<T>
     {
+        ArbolAVL<T> ArbolAVL = new ArbolAVL<T>();
+
         public Nodo<T> raiz;
         public int contador;
 
@@ -52,12 +54,12 @@ namespace Arbol
                 if(actual.derecha == null)
                 {
                     actual.derecha = nuevo;
-                    return actual;
+                    return ArbolAVL.Balancear(actual, nuevo);
                 }
                 else
                 {
                     actual.derecha = InsertarNodo(actual.derecha, nuevo);
-                    return actual;
+                    return ArbolAVL.Balancear(actual, nuevo);
                 }
             }
             else if(nuevo.valor.Nombre.CompareTo(actual.valor.Nombre) < 0)
@@ -65,12 +67,12 @@ namespace Arbol
                 if (actual.izquierda == null)
                 {
                     actual.izquierda = nuevo;
-                    return actual;
+                    return ArbolAVL.Balancear(actual, nuevo);
                 }
                 else
                 {
                     actual.izquierda = InsertarNodo(actual.izquierda, nuevo);
-                    return actual;
+                    return ArbolAVL.Balancear(actual, nuevo);
                 }
             }
             else

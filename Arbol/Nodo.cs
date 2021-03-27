@@ -11,10 +11,13 @@ namespace Arbol
         public Nodo<T> derecha { get; set; }
         public Nodo<T> izquierda { get; set; }
 
+        //Factor de equilibrio, propio del árbol AVL
+        public int Fe;
 
         // constructor de la clase Nodo
         public Nodo()
         {
+            Fe = 0; 
             derecha = null;
             izquierda = null;
         }
