@@ -72,22 +72,21 @@ namespace ArbolAVL
             return aux; 
         }
 
-        /*public void Balancear(Nodo<T> actual, Nodo<T> nuevo, ref Nodo<T> Raiz)
+        public Nodo<T> Balancear(Nodo<T> actual)
         {
-            if ((CalcFe(actual.izquierda) - CalcFe(actual.derecha)) == 2)
+            Nodo<T> raiz = actual;
+            if (((CalcFe(actual.derecha)) - CalcFe(actual.izquierda)) == 2)
             {
-                if (nuevo.valor.Nombre.CompareTo(actual.izquierda.valor.Nombre) < 0)
-                    Raiz = RotarIzquierda(actual);
-                else
-                    Raiz = RDobleIzquierda(actual);
+                raiz = RotarDerecha(actual);
+                Balancear(raiz);
             }
-            if((CalcFe(actual.derecha) - CalcFe(actual.izquierda) == 2))
+            else if ((CalcFe(actual.derecha) - CalcFe(actual.izquierda)) == -2)
             {
-                if (nuevo.valor.Nombre.CompareTo(actual.derecha.valor.Nombre) > 0)
-                    Raiz = RotarDerecha(actual);
-                else
-                    Raiz = RDobleDerecha(actual);
+                raiz = RotarIzquierda(actual);
+                Balancear(raiz);
             }
-        }*/
+
+            return raiz;
+        }
     }
 }
