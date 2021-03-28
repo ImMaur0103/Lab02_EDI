@@ -49,36 +49,70 @@ namespace Arbol
 
         private Nodo<T> InsertarNodo(Nodo<T> actual, Nodo<T> nuevo)
         {
-            if (nuevo.valor.Nombre.CompareTo(actual.valor.Nombre) > 0)
-            {
-                if(actual.derecha == null)
-                {
-                    actual.derecha = nuevo;
-                    return ArbolAVL.Balancear(actual, nuevo);
-                }
-                else
-                {
-                    actual.derecha = InsertarNodo(actual.derecha, nuevo);
-                    return ArbolAVL.Balancear(actual, nuevo);
-                }
-            }
-            else if(nuevo.valor.Nombre.CompareTo(actual.valor.Nombre) < 0)
+            Nodo<T> Raiz = actual;
+            
+            if(nuevo.valor.Nombre.CompareTo(actual.valor.Nombre) < 0)
             {
                 if (actual.izquierda == null)
                 {
                     actual.izquierda = nuevo;
-                    return ArbolAVL.Balancear(actual, nuevo);
                 }
                 else
                 {
                     actual.izquierda = InsertarNodo(actual.izquierda, nuevo);
-                    return ArbolAVL.Balancear(actual, nuevo);
+                    if((ArbolAVL.CalcFe(actual.izquierda) - ArbolAVL.CalcFe(actual.derecha)) == 2){
+                        if(nuevo.valor.Nombre.CompareTo(actual.izquierda.valor.Nombre) < 0)
+                        {
+                            Raiz = ArbolAVL.RotarIzquierda(actual);
+                        }
+                        else
+                        {
+                            Raiz = ArbolAVL.RDobleIzquierda(actual);
+                        }
+                    }
+                }
+            }
+            else if (nuevo.valor.Nombre.CompareTo(actual.valor.Nombre) > 0)
+            {
+                if(actual.derecha == null)
+                {
+                    actual.derecha = nuevo;
+                }
+                else
+                {
+                    actual.derecha = InsertarNodo(actual.derecha, nuevo);
+                    if((ArbolAVL.CalcFe(actual.derecha)-ArbolAVL.CalcFe(actual.izquierda)) == 2)
+                    {
+                        if (nuevo.valor.Nombre.CompareTo(actual.derecha.valor.Nombre) > 0)
+                        {
+                            Raiz = ArbolAVL.RotarDerecha(actual);
+                        }
+                        else
+                        {
+                            Raiz = ArbolAVL.RDobleDerecha(actual);
+                        }
+                    }
                 }
             }
             else
             {
                 return null;
             }
+
+            if ((actual.izquierda == null) && (actual.derecha != null))
+            {
+                actual.Fe = actual.derecha.Fe + 1;
+            }
+            else if ((actual.derecha == null) && (actual.izquierda != null))
+            {
+                actual.Fe = actual.izquierda.Fe + 1;
+            }
+            else
+            {
+                actual.Fe = Math.Max(ArbolAVL.CalcFe(actual.izquierda), ArbolAVL.CalcFe(actual.derecha)) + 1;
+            }
+
+            return Raiz;
         }
 
         public int Buscar(string nombre)
