@@ -77,12 +77,54 @@ namespace ArbolAVL
             Nodo<T> raiz = actual;
             if (((CalcFe(actual.derecha)) - CalcFe(actual.izquierda)) == 2)
             {
-                raiz = RotarDerecha(actual);
+                if(actual.izquierda != null)
+                {
+                    if (raiz.izquierda.izquierda == null && raiz.izquierda.derecha == null)
+                    {
+                        raiz = RDobleDerecha(actual);
+                    }
+                    else
+                    {
+                        raiz = RotarIzquierda(actual);
+                    }
+                }
+                else
+                {
+                    if (raiz.derecha.izquierda == null && raiz.derecha.derecha == null)
+                    {
+                        raiz = RDobleDerecha(actual);
+                    }
+                    else
+                    {
+                        raiz = RotarIzquierda(actual);
+                    }
+                }
                 Balancear(raiz);
             }
             else if ((CalcFe(actual.derecha) - CalcFe(actual.izquierda)) == -2)
             {
-                raiz = RotarIzquierda(actual);
+                if (actual.izquierda != null)
+                {
+                    if (raiz.izquierda.izquierda == null && raiz.izquierda.derecha == null)
+                    {
+                        raiz = RDobleIzquierda(actual);
+                    }
+                    else
+                    {
+                        raiz = RotarDerecha(actual);
+                    }
+                }
+                else
+                {
+                    if (raiz.derecha.izquierda == null && raiz.derecha.derecha == null)
+                    {
+                        raiz = RDobleIzquierda(actual);
+                    }
+                    else
+                    {
+                        raiz = RotarDerecha(actual);
+                    }
+                } 
                 Balancear(raiz);
             }
 

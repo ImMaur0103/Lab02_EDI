@@ -29,6 +29,10 @@ namespace Arbol
             NuevoNodo.valor = valor;
             NuevoNodo.izquierda = null;
             NuevoNodo.derecha = null;
+            if(Buscar(valor.Nombre.ToLower()) > 0)
+            {
+                return;
+            }
 
             if (raiz == null)
             {
@@ -150,9 +154,16 @@ namespace Arbol
 
         public Nodo<T> DeleteNodo(Nodo<T> actual, Nodo<T> Borrar)
         {
+            if (actual == null)
+                return null;
+
             if(Borrar.valor.Nombre.CompareTo(actual.valor.Nombre) < 0)
             {
-                if(actual.izquierda.valor.Nombre == Borrar.valor.Nombre)
+                if (actual.izquierda == null)
+                {
+                    return actual;
+                }
+                else if(actual.izquierda.valor.Nombre == Borrar.valor.Nombre)
                 {
                     if(actual.izquierda.izquierda == null && actual.izquierda.derecha == null)
                     {
@@ -183,7 +194,11 @@ namespace Arbol
             }
             else if (Borrar.valor.Nombre.CompareTo(actual.valor.Nombre) > 0)
             {
-                if (actual.derecha.valor.Nombre == Borrar.valor.Nombre)
+                if (actual.derecha == null)
+                {
+                    return actual;
+                }
+                else if (actual.derecha.valor.Nombre == Borrar.valor.Nombre)
                 {
                     if (actual.derecha.izquierda == null && actual.derecha.derecha == null)
                     {
@@ -199,11 +214,11 @@ namespace Arbol
                     }
                     else if (actual.derecha.izquierda != null && actual.derecha.derecha == null)
                     {
-                        actual.izquierda = actual.izquierda.izquierda;
+                        actual.derecha = actual.derecha.izquierda;
                     }
                     else if (actual.derecha.izquierda == null && actual.derecha.derecha != null)
                     {
-                        actual.izquierda = actual.izquierda.derecha;
+                        actual.derecha = actual.derecha.derecha;
                     }
                     actual = ArbolAVL.Balancear(actual);
                 }
@@ -211,6 +226,30 @@ namespace Arbol
                 {
                     actual.derecha = DeleteNodo(actual.derecha, Borrar);
                 }
+            }
+            else if(Borrar.valor.Nombre.CompareTo(actual.valor.Nombre) == 0)
+            {
+                if (actual.izquierda == null && actual.derecha == null)
+                {
+                    return null;
+                }
+                else if (actual.izquierda != null && actual.derecha != null)
+                {
+                    Nodo<T> aux = actual;
+                    aux = Rearmar(aux, aux.derecha);
+                    AjusteFeDerecha(ref aux);
+                    aux = ArbolAVL.Balancear(aux);
+                    actual = aux;
+                }
+                else if (actual.izquierda.izquierda != null && actual.izquierda.derecha == null)
+                {
+                    actual = actual.izquierda;
+                }
+                else if (actual.izquierda.izquierda == null && actual.izquierda.derecha != null)
+                {
+                    actual = actual.derecha;
+                }
+                actual = ArbolAVL.Balancear(actual);
             }
 
             if ((actual.izquierda == null) && (actual.derecha != null))

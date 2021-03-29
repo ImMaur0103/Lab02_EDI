@@ -41,14 +41,9 @@ namespace Lab02.Extra
 
         public void Actualizar()
         {
-            if(Indice.raiz != null)
-            {
-                Indice.Delete();
-                SinExistencias.Delete();
-            }
             for (int i = 0; i < ListaFarmacos.contador; i++)
             {
-
+                Arbol.Nodo<Farmaco> Eliminar = new Arbol.Nodo<Farmaco>();
                 Farmaco NuevoFarmaco = new Farmaco();
                 InfoFarmaco FarmacoNuevo = new InfoFarmaco();
                 FarmacoNuevo = ListaFarmacos.ObtenerValor(i);
@@ -56,13 +51,17 @@ namespace Lab02.Extra
                 NuevoFarmaco.Nombre = FarmacoNuevo.Nombre;
                 NuevoFarmaco.Numero_Linea = FarmacoNuevo.ID;
 
-                if (FarmacoNuevo.Existencia != 0)
+                if (FarmacoNuevo.Existencia != 0 && FarmacoNuevo.Existencia > 0)
                 {
                     Indice.Insertar(NuevoFarmaco);
+                    Eliminar.valor = NuevoFarmaco;
+                    SinExistencias.raiz = SinExistencias.DeleteNodo(SinExistencias.raiz, Eliminar);
                 }
-                else
+                else if (FarmacoNuevo.Existencia <= 0)
                 {
                     SinExistencias.Insertar(NuevoFarmaco);
+                    Eliminar.valor = NuevoFarmaco;
+                    Indice.raiz = Indice.DeleteNodo(Indice.raiz, Eliminar);
                 }
 
             }

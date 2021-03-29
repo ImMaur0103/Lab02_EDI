@@ -128,6 +128,11 @@ namespace Lab02.Controllers
                             }
                             return View("Pedido");
                         }
+                        else
+                        {
+                            ViewBag.Mensaje = "No quedan mas existencias de " + Singleton.Instance.Compra.ObtenerValor(i).Nombre;
+                            return View("Pedido");
+                        }
                     }
                 }
                 InfoFarmaco Medicamento = new InfoFarmaco();
@@ -177,6 +182,8 @@ namespace Lab02.Controllers
                 infoFarmaco = Singleton.Instance.ListaFarmacos.ObtenerValor(IDFarmaco);
                 infoFarmaco.Existencia = rndm.Next(1, 15);
             }
+
+            Singleton.Instance.Actualizar();
         }
 
         public IActionResult OrdenAlfabetico()
