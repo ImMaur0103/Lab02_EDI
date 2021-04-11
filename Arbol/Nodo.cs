@@ -6,6 +6,7 @@ namespace Arbol
     {
         // Valor del nodo, el cual es el NoLinea y Nombre del fármaco
         public Farmaco valor { get; set; }
+        public int altura;
 
         //Posiciones del árbol binario
         public Nodo<T> derecha { get; set; }
@@ -15,6 +16,7 @@ namespace Arbol
         // constructor de la clase Nodo
         public Nodo()
         {
+            altura = 0;
             derecha = null;
             izquierda = null;
         }

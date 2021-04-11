@@ -47,35 +47,129 @@ namespace Arbol
 
         private Nodo<T> InsertarNodo(Nodo<T> actual, Nodo<T> nuevo)
         {
-            if (nuevo.valor.Nombre.CompareTo(actual.valor.Nombre) > 0)
+            if (nuevo.valor.Nombre.CompareTo(actual.valor.Nombre) > 0)//al ser mayor  se tiene que mover el arbol
             {
-                if(actual.derecha == null)
-                {
-                    actual.derecha = nuevo;
-                    return actual;
-                }
-                else
-                {
-                    actual.derecha = InsertarNodo(actual.derecha, nuevo);
-                    return actual;
-                }
+                actual = RestructurarArbol(actual, nuevo);
+                actual = ArregloIndices(actual);
+                return actual;
             }
-            else if(nuevo.valor.Nombre.CompareTo(actual.valor.Nombre) < 0)
+            else if(nuevo.valor.Nombre.CompareTo(actual.valor.Nombre) < 0)//si es menor se tiene que verificar si se va a la derecha o a la izquierda
             {
                 if (actual.izquierda == null)
                 {
                     actual.izquierda = nuevo;
                     return actual;
                 }
+                else if(actual.izquierda != null && actual.derecha == null)
+                {
+                    actual.derecha = nuevo;
+                    actual.altura++;
+                    return actual;
+                }
+                else if(actual.izquierda.altura > actual.derecha.altura)
+                {
+                    actual.derecha = InsertarNodo(actual.derecha, nuevo);
+                    if (actual.altura < CalAlturas(actual.derecha) + 1)
+                        actual.altura++;
+                    return actual;
+                }
                 else
                 {
                     actual.izquierda = InsertarNodo(actual.izquierda, nuevo);
+                    if(actual.altura < CalAlturas(actual.derecha) + 1)
+                        actual.altura++;
                     return actual;
                 }
             }
             else
             {
                 return null;
+            }
+        }
+
+        private Nodo<T> RestructurarArbol(Nodo<T> actual, Nodo<T> nuevo)
+        {
+            if (actual.izquierda == null)
+            {
+                nuevo.izquierda = actual;
+                return nuevo;
+            }
+            else if (actual.derecha == null)
+            {
+                nuevo.izquierda = actual.izquierda;
+                actual.izquierda = null;
+                nuevo.derecha = actual;
+                return nuevo;
+            }
+            else if (CalAlturas(actual.izquierda) > CalAlturas(actual.derecha))
+            {
+                nuevo.izquierda = actual.izquierda;
+                actual.izquierda = actual.derecha;
+                actual.derecha = null;
+                nuevo.derecha = actual;
+                return nuevo;
+            }
+            else
+            {
+                if (CalAlturas(actual.izquierda.izquierda) + 1 > CalAlturas(actual.derecha))
+                {
+                    nuevo.derecha = actual.derecha;
+                    actual.derecha = actual.izquierda.izquierda;
+                    actual.izquierda.izquierda = null;
+                    nuevo.izquierda = actual;
+                    return nuevo;
+                }
+                else if (actual.izquierda.derecha != null)
+                {
+                    nuevo.derecha = actual.derecha;
+                    actual.derecha = null;
+                    nuevo.izquierda = actual;
+                    return nuevo;
+                }
+                else
+                {
+                    nuevo.derecha = actual.derecha;
+                    actual.derecha = null;
+                    nuevo.izquierda = actual;
+                    return nuevo;
+                }
+            }
+        }
+
+        private Nodo<T> ArregloIndices(Nodo<T> subArbol)
+        {
+            Nodo<T> Auxiliar = subArbol;
+
+            if(Auxiliar.izquierda != null)
+            {
+                Auxiliar.altura = 0;
+                Auxiliar.izquierda = ArregloIndices(Auxiliar.izquierda);
+            }
+            
+            if (Auxiliar.derecha != null)
+            {
+                Auxiliar.derecha = ArregloIndices(Auxiliar.derecha);
+                if(Auxiliar.altura < Auxiliar.derecha.altura + 1)
+                    Auxiliar.altura = Auxiliar.derecha.altura + 1;
+            }
+            
+            if(Auxiliar.derecha == null && Auxiliar.izquierda == null)
+            {
+                Auxiliar.altura = 0;
+                return Auxiliar;
+            }
+            return Auxiliar;
+        }
+
+        private int CalAlturas(Nodo<T> obtener)
+        {
+            if(obtener == null)
+            {
+                return -1;
+            }
+            else
+            {
+                return obtener.altura;
             }
         }
 
